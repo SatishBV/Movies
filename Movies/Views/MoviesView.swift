@@ -18,14 +18,6 @@ struct MoviesView: View {
     init() {
         UITableView.appearance().backgroundColor = UIColor.clear
         UITableViewCell.appearance().selectionStyle = .none
-        
-        UINavigationBar.appearance().backgroundColor = .clear
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().barTintColor = .orange
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.orange]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.orange]
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
     }
     
     var body: some View {
@@ -58,19 +50,20 @@ struct MoviesView: View {
             .padding(.horizontal, 16)
             
             List {
-                ForEach(movieManager.movies.filter { searchTerm.isEmpty ? true : $0.title?.lowercased().localizedStandardContains(searchTerm.lowercased()) ?? true }) { movie in
+                ForEach(
+                    movieManager.movies.filter {
+                        searchTerm.isEmpty ? true : $0.title?.lowercased().localizedStandardContains(searchTerm.lowercased()) ?? true
+                    }
+                ) { movie in
                     NavigationLink(destination: MovieDetailView(movie: movie)) {
                         MovieCell(movie: movie)
                     }
-                    .frame(minHeight: 200)
-                    .listRowBackground(Color.clear)
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 200, alignment: .leading)
                 }
             }
             .onAppear {
                 movieManager.getNowPlaying()
             }
-            
-            Spacer()
         }
     }
 }

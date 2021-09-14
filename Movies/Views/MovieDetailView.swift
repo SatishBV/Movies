@@ -23,8 +23,6 @@ struct MovieDetailView: View {
             backgroundView
             
             ScrollView(.vertical, showsIndicators: false) {
-                headerView
-                
                 VStack(alignment: .leading) {
                     moviePosterView
                     
@@ -44,7 +42,8 @@ struct MovieDetailView: View {
                 
             }
         }
-        .edgesIgnoringSafeArea(.all)
+        .navigationTitle(Text(movie.titleString))
+        .navigationBarTitleDisplayMode(.large)
     }
     
     private var backgroundView: some View {
